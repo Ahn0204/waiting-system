@@ -27,4 +27,19 @@ public class WaitingController {
     public List<Waiting> getMyWaiting(@PathVariable("userId") Long userId) {
         return waitingService.getMyWaiting(userId);
     }
+
+    // 웨이팅 취소
+    @PatchMapping("/{waitingId}/cancel")
+    public String cancelWaiting(@PathVariable("waitingId") Long waitingId) {
+        return waitingService.cancelWaiting(waitingId);
+    }
+
+    // 웨이팅 상태 변경 (예: 완료, 취소)
+    @PatchMapping("/{waitingId}/status")
+    public String updateStatus(
+            @PathVariable("waitingId") Long waitingId,
+            @RequestParam("status") String status) {
+
+        return waitingService.updateStatus(waitingId, status);
+    }
 }

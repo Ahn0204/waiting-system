@@ -58,4 +58,42 @@ public class WaitingService {
     public List<Waiting> getMyWaiting(Long userId) {
         return waitingRepository.findByUser_UserId(userId);
     }
+
+    // 웨이팅 취소
+    @Transactional
+    public String cancelWaiting(Long waitingId) {
+
+        // 1. 웨이팅 조회
+        Waiting waiting = waitingRepository.findById(waitingId)
+                .orElseThrow(() -> new IllegalArgumentException("웨이팅 없음"));
+
+        // 2. 상태 변경
+        waiting.setStatus("CANCEL");
+
+        return "웨이팅 취소 완료";
+    }
+
+    // 매장 관리자 -> 유저 웨이팅 상태 변경
+    // 웨이팅 상태 변경 (예: CALL, ENTER)
+    @Transactional
+    public String updateStatus(Long waitingId, String status) {
+
+        // 1. 웨이팅 조회
+        Waiting waiting = waitingRepository.findById(waitingId)
+                .orElseThrow(() -> new IllegalArgumentException("웨이팅 없음"));
+
+        // 2. 상태 변경
+        waiting.setStatus(status);
+
+        // 3. 시간 기록
+        if ("CALL".equals(status)) {
+            waiting.setCalledAt(java.time.LocalDateTime.now());
+        }
+
+        if ("ENTER".equals(status)) {
+            waiting.setEnteredAt(java.time.LocalDateTime.now());
+        }
+
+        return "상태 변경 완료: " + status;
+    }
 }
