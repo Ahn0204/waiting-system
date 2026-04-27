@@ -8,6 +8,9 @@ import com.waiting.domain.waiting.Waiting;
 import com.waiting.domain.waiting.WaitingRepository;
 import com.waiting.domain.waiting.dto.WaitingCreateRequest;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,5 +51,11 @@ public class WaitingService {
         waitingRepository.save(waiting);
 
         return "웨이팅 등록 완료 (번호: " + nextNumber + ")";
+    }
+
+    // 내 웨이팅 조회
+    @Transactional(readOnly = true)
+    public List<Waiting> getMyWaiting(Long userId) {
+        return waitingRepository.findByUser_UserId(userId);
     }
 }
