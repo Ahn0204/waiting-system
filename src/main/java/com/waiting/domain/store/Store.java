@@ -42,6 +42,10 @@ public class Store {
     @Column(length = 1)
     private String waitingEnabled = "Y";
 
+    // 매장 상태 (ACTIVE/INACTIVE)
+    @Column(nullable = false)
+    private String status = "ACTIVE"; // ACTIVE, INACTIVE
+
     // 최대 대기 인원 수
     private int maxWaiting = 50;
     // 평균 서비스 시간 (분 단위)

@@ -50,4 +50,10 @@ public class StoreController {
 
         return storeService.updateStore(storeId, request);
     }
+
+    // 매장 삭제 API
+    @PatchMapping("/{storeId}/delete")
+    public String deleteStore(@PathVariable("storeId") Long storeId) {
+        return storeService.deleteStore(storeId);
+    }
 }

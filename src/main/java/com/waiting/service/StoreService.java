@@ -45,13 +45,19 @@ public class StoreService {
     // 사용자가 매장 목록 조회
     @Transactional(readOnly = true)
     public List<Store> getStoreList() {
-        return storeRepository.findAll();
+        return storeRepository.findAll()
+                .stream()
+                .filter(store -> "ACTIVE".equals(store.getStatus()))
+                .toList();
     }
 
     // 사장이 본인의 매장 목록 조회
     @Transactional(readOnly = true)
     public List<Store> getMyStores(Long userId) {
-        return storeRepository.findByOwner_UserId(userId);
+        return storeRepository.findByOwner_UserId(userId)
+                .stream()
+                .filter(store -> "ACTIVE".equals(store.getStatus()))
+                .toList();
     }
 
     // 매장 상세 조회
@@ -99,4 +105,17 @@ public class StoreService {
 
         return "매장 수정 완료";
     }
+
+    // 매장 삭제 (소프트 삭제 : 비활성화)
+    @Transactional
+    public String deleteStore(Long storeId) {
+
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("매장 없음"));
+
+        store.setStatus("INACTIVE");
+
+        return "매장 삭제 완료 (비활성화)";
+    }
+
 }
