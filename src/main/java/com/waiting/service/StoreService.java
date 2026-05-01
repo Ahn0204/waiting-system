@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +39,17 @@ public class StoreService {
         storeRepository.save(store);
 
         return "매장 등록 완료";
+    }
+
+    // 사용자가 매장 목록 조회
+    @Transactional(readOnly = true)
+    public List<Store> getStoreList() {
+        return storeRepository.findAll();
+    }
+
+    // 사장이 본인의 매장 목록 조회
+    @Transactional(readOnly = true)
+    public List<Store> getMyStores(Long userId) {
+        return storeRepository.findByOwner_UserId(userId);
     }
 }

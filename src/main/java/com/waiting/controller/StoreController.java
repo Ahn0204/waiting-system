@@ -1,8 +1,12 @@
 package com.waiting.controller;
 
+import com.waiting.domain.store.Store;
 import com.waiting.domain.store.dto.StoreCreateRequest;
 import com.waiting.service.StoreService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,5 +21,17 @@ public class StoreController {
     @PostMapping
     public String createStore(@RequestBody StoreCreateRequest request) {
         return storeService.createStore(request);
+    }
+
+    // 사용자가 매장 목록 조회 API
+    @GetMapping
+    public List<Store> getStoreList() {
+        return storeService.getStoreList();
+    }
+
+    // 사장이 본인의 매장 목록 조회 API
+    @GetMapping("/owner/{userId}")
+    public List<Store> getMyStores(@PathVariable("userId") Long userId) {
+        return storeService.getMyStores(userId);
     }
 }
