@@ -118,4 +118,16 @@ public class StoreService {
         return "매장 삭제 완료 (비활성화)";
     }
 
+    // 매장 복구 (비활성화 -> 활성화)
+    @Transactional
+    public String restoreStore(Long storeId) {
+
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("매장 없음"));
+
+        store.setStatus("ACTIVE");
+
+        return "매장 복구 완료";
+    }
+
 }

@@ -56,4 +56,10 @@ public class StoreController {
     public String deleteStore(@PathVariable("storeId") Long storeId) {
         return storeService.deleteStore(storeId);
     }
+
+    // 매장 복구 API
+    @PatchMapping("/{storeId}/restore")
+    public String restoreStore(@PathVariable("storeId") Long storeId) {
+        return storeService.restoreStore(storeId);
+    }
 }
