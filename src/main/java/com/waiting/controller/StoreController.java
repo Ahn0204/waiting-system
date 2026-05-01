@@ -2,6 +2,7 @@ package com.waiting.controller;
 
 import com.waiting.domain.store.Store;
 import com.waiting.domain.store.dto.StoreCreateRequest;
+import com.waiting.domain.store.dto.StoreUpdateRequest;
 import com.waiting.service.StoreService;
 import lombok.RequiredArgsConstructor;
 
@@ -39,5 +40,14 @@ public class StoreController {
     @GetMapping("/{storeId}")
     public Store getStoreDetail(@PathVariable("storeId") Long storeId) {
         return storeService.getStoreDetail(storeId);
+    }
+
+    // 매장 수정 API
+    @PatchMapping("/{storeId}")
+    public String updateStore(
+            @PathVariable("storeId") Long storeId,
+            @RequestBody StoreUpdateRequest request) {
+
+        return storeService.updateStore(storeId, request);
     }
 }
