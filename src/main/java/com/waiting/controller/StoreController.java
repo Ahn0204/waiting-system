@@ -34,4 +34,10 @@ public class StoreController {
     public List<Store> getMyStores(@PathVariable("userId") Long userId) {
         return storeService.getMyStores(userId);
     }
+
+    // 매장 상세 조회 API
+    @GetMapping("/{storeId}")
+    public Store getStoreDetail(@PathVariable("storeId") Long storeId) {
+        return storeService.getStoreDetail(storeId);
+    }
 }

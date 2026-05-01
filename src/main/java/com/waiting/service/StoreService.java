@@ -52,4 +52,12 @@ public class StoreService {
     public List<Store> getMyStores(Long userId) {
         return storeRepository.findByOwner_UserId(userId);
     }
+
+    // 매장 상세 조회
+    @Transactional(readOnly = true)
+    public Store getStoreDetail(Long storeId) {
+
+        return storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("매장 없음"));
+    }
 }
